@@ -1,5 +1,10 @@
 package com.cloud.accounts.controller;
 
+import com.cloud.accounts.dto.*;
+import com.cloud.accounts.entity.*;
+import com.cloud.accounts.mapper.*;
+import com.cloud.accounts.repository.*;
+import lombok.*;
 import org.springframework.http.*;
 import org.springframework.validation.annotation.*;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +18,15 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping(path="/accounts/{accountId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(path="/{accountId}", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Validated
+@AllArgsConstructor
 public class AccountsController {
+    private AccountRepository  accountRepository;
+
     @GetMapping (path = "/transactions")
-    public ResponseEntity<String> postAccount() {
+    public ResponseEntity<String> postAccount(@RequestBody Accounts accounts) {
+        accountRepository.save(accounts);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping(path = "/balance")

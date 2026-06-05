@@ -1,4 +1,4 @@
-package com.cloud.accountledger.service.client;
+package com.cloud.accountsledger.service.client;
 
 
 public class AccountsFeignClient {

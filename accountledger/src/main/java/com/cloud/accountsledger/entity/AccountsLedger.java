@@ -1,7 +1,8 @@
-package com.cloud.accountledger.entity;
+package com.cloud.accountsledger.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.extern.slf4j.*;
 
 
 /*
@@ -18,14 +19,15 @@ import lombok.*;
             | `eventTimestamp` | string (ISO 8601) | Yes | When the event originally occurred |
  */
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Slf4j
 @Entity
-@Getter
-@Setter @ToString @AllArgsConstructor @NoArgsConstructor
 public class AccountsLedger {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id
-            ;
+    private Long id;
     @NonNull
     private String eventId;
 
@@ -46,4 +48,5 @@ public class AccountsLedger {
 
     private String batchId;
     private String source;
+
 }

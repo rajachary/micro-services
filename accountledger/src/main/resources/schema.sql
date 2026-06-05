@@ -1,5 +1,5 @@
 
-   CREATE TABLE IF NOT EXISTS `customer` (
+   CREATE TABLE IF NOT EXISTS `accountsledger` (
     id int AUTO_INCREMENT  PRIMARY KEY,
      eventId varchar(100) NOT NULL,
      accountId varchar(100) NOT NULL,

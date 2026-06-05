@@ -1,13 +1,13 @@
-package com.cloud.gatewayserver;
+package com.cloud.accountsledger;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GatewayserverApplication {
+public class AccountLedgerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GatewayserverApplication.class, args);
+		SpringApplication.run(AccountLedgerApplication.class, args);
 	}
 
 }
