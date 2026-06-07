@@ -30,6 +30,7 @@ security:
   oauth2:
     resourceserver:
       jwt:
+        issuer: "http://localhost:7080/realms/master"
         jwk-set-uri: "http://localhost:7080/realms/master/protocol/openid-connect/certs"
 management:
   endpoints:

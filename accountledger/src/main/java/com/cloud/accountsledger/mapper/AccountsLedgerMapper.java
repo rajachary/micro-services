@@ -11,8 +11,8 @@ public class AccountsLedgerMapper {
        accountsLedger.setAmount(accountsLedgerDto.getAmount());
        accountsLedger.setCurrency(accountsLedgerDto.getCurrency());
        accountsLedger.setEventTimestamp(accountsLedgerDto. getEventTimestamp());
-       accountsLedger.setBatchId(accountsLedgerDto.getMetaData().getBatchId());
-       accountsLedger.setSource (accountsLedgerDto.getMetaData().getSource());
+       accountsLedger.setBatchId(accountsLedgerDto.getMetadata().getBatchId());
+       accountsLedger.setSource (accountsLedgerDto.getMetadata().getSource());
         return accountsLedger;
     }
     public static AccountsLedgerDto mapToAccountsLedgerDto(AccountsLedgerDto accountsLedgerDto, AccountsLedger accountsLedger){

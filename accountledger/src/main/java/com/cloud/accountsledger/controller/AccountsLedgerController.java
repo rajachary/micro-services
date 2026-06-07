@@ -35,7 +35,7 @@ public class AccountsLedgerController {
     private static final Logger log = LoggerFactory.getLogger(AccountsLedgerController.class);
     private AccountLedgerService accountLedgerService;
 
-    @PostMapping("/")
+    @PostMapping()
     public ResponseEntity<AccountsLedger> postEvent(@Validated @RequestBody AccountsLedgerDto accountsLedgerDto) {
        log.info("Event received: {}", accountsLedgerDto);
         AccountsLedger accountsLedger = AccountsLedgerMapper.mapToAccountsLedger(accountsLedgerDto, new AccountsLedger());

@@ -20,12 +20,11 @@ import lombok.*;
 
 @Entity
 @Getter @Setter @ToString @AllArgsConstructor @NoArgsConstructor
+@Data
 public class Accounts {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @NonNull
+
+    @Id
     String accountId;
 
     @NonNull

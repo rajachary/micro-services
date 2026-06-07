@@ -31,6 +31,6 @@ public class AccountsLedgerDto {
     @NotEmpty(message = "Event Timestamp can not be a null or empty")
     private String eventTimestamp;
 
-    private MetaData metaData;
+    private MetaData metadata;
 
 }

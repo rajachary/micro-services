@@ -5,6 +5,7 @@ import org.springframework.http.*;
 import org.springframework.security.config.*;
 import org.springframework.security.config.annotation.web.reactive.*;
 import org.springframework.security.config.web.server.*;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.web.server.*;
 
 @Configuration
@@ -24,5 +25,9 @@ public class SecurityConfig {
                 .csrf( csrfSpec ->
                         csrfSpec.disable())
                 .build();
+    }
+    @Bean
+    public ReactiveJwtDecoder reactiveJwtDecoder() {
+        return NimbusReactiveJwtDecoder.withJwkSetUri("http://localhost:7080/realms/master").build();
     }
 }
