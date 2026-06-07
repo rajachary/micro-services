@@ -1,6 +1,5 @@
 
    CREATE TABLE IF NOT EXISTS `accountsledger` (
-    id int AUTO_INCREMENT ,
      eventId varchar(100) NOT NULL PRIMARY KEY,
      accountId varchar(100) NOT NULL,
      type varchar(100) NOT NULL,
