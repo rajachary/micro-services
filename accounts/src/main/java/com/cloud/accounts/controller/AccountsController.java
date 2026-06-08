@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class AccountsController {
     private AccountRepository  accountRepository;
 
-    @GetMapping (path = "/transactions")
+    @PostMapping(path = "/transactions")
     public ResponseEntity<Accounts> postAccount(@Validated @PathVariable String accountId, @RequestBody Accounts accounts) {
         accountRepository.save(accounts);
         return ResponseEntity.status(HttpStatus.OK).body(accounts);

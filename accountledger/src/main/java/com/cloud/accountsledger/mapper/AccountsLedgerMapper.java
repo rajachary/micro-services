@@ -27,29 +27,9 @@ public class AccountsLedgerMapper {
     }
     public Accounts mapToAccounts(AccountsLedgerDto accountsLedgerDto, Accounts accounts){
          accounts.setAccountId(accountsLedgerDto.getAccountId());
-         accounts.setBalance(getBalance(accountsLedgerDto));
+         //accounts.setBalance(getBalance(accountsLedgerDto));
          accounts.setCurrency(accountsLedgerDto.getCurrency());
         return accounts;
     }
-    private  double getBalance(AccountsLedgerDto accountsLedgerDto) {
-        List<AccountsLedger> allByAccountId = accountsLedgerRepository.findAllByAccountId(accountsLedgerDto.getAccountId());
-        OptionalDouble debitBalance = allByAccountId.stream()
-                .filter(al -> al.getType().equals("DEBIT"))
-                .mapToDouble(al -> al.getAmount())
-                .reduce(Double::sum);
-        OptionalDouble creditBalance = allByAccountId.stream()
-                .filter(al -> al.getType().equals("CREDIT"))
-                .mapToDouble(al -> al.getAmount())
-                .reduce(Double::sum);
 
-        if (debitBalance.isPresent() && creditBalance.isPresent()) {
-            return debitBalance.getAsDouble() - creditBalance.getAsDouble();
-        } else if (debitBalance.isPresent()) {
-            return debitBalance.getAsDouble();
-        } else if (creditBalance.isPresent()) {
-            return -creditBalance.getAsDouble();
-        } else {
-            return 0.0;
-        }
-    }
 }

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import java.util.stream.*;
 
-import static org.springframework.http.ResponseEntity.ok;
 
 /*
  * Controller class for accounts
@@ -47,8 +46,9 @@ public class AccountsLedgerController {
        log.info("Event received: {}", accountsLedgerDto);
         AccountsLedger accountsLedger = AccountsLedgerMapper.mapToAccountsLedger(accountsLedgerDto, new AccountsLedger());
         accountLedgerService.saveAccountLedgerEvent(accountsLedger);
+        accountLedgerService.getBalance(accountsLedgerDto);
         Accounts accounts = accountsLedgerMapper.mapToAccounts(accountsLedgerDto, new Accounts());
-        accountsLedgerFeignClient.postAccount(accounts);
+        accountsLedgerFeignClient.postAccount(accounts.getAccountId(), accounts);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

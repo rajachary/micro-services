@@ -12,4 +12,6 @@ public interface AccountLedgerService {
     AccountsLedger fetchAccountLedgerEventById(String eventId);
 
     List<AccountsLedger> fetchAccountLedgerByAccountId(String AccountId);
+
+    double getBalance(AccountsLedgerDto accountsLedgerDto);
 }
