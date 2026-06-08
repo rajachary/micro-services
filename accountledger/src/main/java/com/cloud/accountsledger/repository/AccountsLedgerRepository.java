@@ -10,7 +10,7 @@ import java.util.*;
 
 @Repository
 public interface AccountsLedgerRepository extends JpaRepository<AccountsLedger, Long> {
-    AccountsLedgerDto findByEventId(String eventId);
+    AccountsLedger findByEventId(String eventId);
 
     AccountsLedger findByAccountId(String accountId);
 
