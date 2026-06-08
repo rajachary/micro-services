@@ -1,6 +1,5 @@
 package com.cloud.accountsledger.service.impl;
 
-import com.cloud.accountsledger.dto.*;
 import com.cloud.accountsledger.entity.*;
 import com.cloud.accountsledger.repository.*;
 import com.cloud.accountsledger.service.*;
@@ -24,13 +23,13 @@ public class AccountsLedgerServiceImpl implements AccountLedgerService {
     }
 
     @Override
-    public AccountsLedgerDto fetchAccountLedgerEventById(String eventId) {
+    public AccountsLedger fetchAccountLedgerEventById(String eventId) {
         return accountsLedgerRepository.findByEventId(eventId);
     }
 
     @Override
-    public AccountsLedger fetchAccountLedgerByAccountId(String accountId) {
+    public List<AccountsLedger> fetchAccountLedgerByAccountId(String accountId) {
         AccountsLedger accountsLedger = accountsLedgerRepository.findByAccountId(accountId);
-        return accountsLedgerRepository.findByAccountId(accountId);
+        return (List<AccountsLedger>) accountsLedgerRepository.findByAccountId(accountId);
     }
 }
