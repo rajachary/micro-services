@@ -3,11 +3,13 @@ package com.cloud.accountsledger.service;
 import com.cloud.accountsledger.dto.*;
 import com.cloud.accountsledger.entity.*;
 
+import java.util.*;
+
 public interface AccountLedgerService {
 
     AccountsLedger saveAccountLedgerEvent(AccountsLedger accountsLedger);
 
-    AccountsLedgerDto fetchAccountLedgerEventById(String eventId);
+    AccountsLedger fetchAccountLedgerEventById(String eventId);
 
-    AccountsLedgerDto fetchAccountLedgerByAccountId(String AccountId);
+    List<AccountsLedger> fetchAccountLedgerByAccountId(String AccountId);
 }

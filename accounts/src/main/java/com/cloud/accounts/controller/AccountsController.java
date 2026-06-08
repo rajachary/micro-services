@@ -9,11 +9,12 @@ import org.springframework.http.*;
 import org.springframework.validation.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
+
+
 /*
  * Controller class for accounts
  * @author Kumar Thirunavukarasu
  * @version 1.0
- * @since 2023-01-01
  * @see AccountsApplication
  */
 
@@ -25,16 +26,18 @@ public class AccountsController {
     private AccountRepository  accountRepository;
 
     @GetMapping (path = "/transactions")
-    public ResponseEntity<String> postAccount(@RequestBody Accounts accounts) {
+    public ResponseEntity<Accounts> postAccount(@Validated @PathVariable String accountId, @RequestBody Accounts accounts) {
         accountRepository.save(accounts);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(accounts);
     }
     @GetMapping(path = "/balance")
-    public ResponseEntity<String> getCurrentBalance() {
+    public ResponseEntity<String> getCurrentBalance(@Validated @PathVariable String accountId) {
+        accountRepository.findByAccountId(accountId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping
-    public ResponseEntity<String> getAccountDetailsAndRecentTransactions() {
+    public ResponseEntity<String> getAccountDetailsAndRecentTransactions(@Validated @PathVariable String accountId) {
+        accountRepository.findByAccountId(accountId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

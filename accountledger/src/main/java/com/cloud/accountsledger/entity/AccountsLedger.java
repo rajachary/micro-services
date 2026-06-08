@@ -26,8 +26,8 @@ import lombok.extern.slf4j.*;
 @Entity
 public class AccountsLedger {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
     @NonNull
     private String eventId;
 

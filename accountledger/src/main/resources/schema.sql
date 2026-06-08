@@ -6,6 +6,6 @@
      amount double NOT NULL,
      currency varchar(100) NOT NULL,
      eventTimestamp varchar(100) NOT NULL,
-     batchId  varchar,
-     source varchar
+     batchId  varchar(100),
+     source varchar(100)
    );

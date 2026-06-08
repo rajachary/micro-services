@@ -1,9 +1,13 @@
 package com.cloud.accounts.service.impl;
 
 import com.cloud.accounts.dto.*;
+import com.cloud.accounts.repository.*;
 import com.cloud.accounts.service.*;
 
 public class AccountsServiceImpl implements AccountsService {
+
+    private AccountRepository accountRepository;
+
     @Override
     public AccountsDto saveAccount(AccountsDto accountsDto) {
         return null;

@@ -5,6 +5,8 @@ import com.cloud.accountsledger.dto.*;
 import com.cloud.accountsledger.entity.*;
 import com.cloud.accountsledger.mapper.*;
 import com.cloud.accountsledger.service.*;
+import com.cloud.accountsledger.service.client.*;
+import jakarta.transaction.*;
 import jakarta.validation.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
@@ -16,6 +18,9 @@ import org.springframework.validation.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.*;
+
+import static org.springframework.http.ResponseEntity.ok;
 
 /*
  * Controller class for accounts
@@ -29,29 +34,36 @@ import java.util.*;
 @RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
 @Validated
-@Slf4j
 public class AccountsLedgerController {
 
     private static final Logger log = LoggerFactory.getLogger(AccountsLedgerController.class);
     private AccountLedgerService accountLedgerService;
+    private AccountsFeignClient accountsLedgerFeignClient;
+    private AccountsLedgerMapper accountsLedgerMapper;
 
     @PostMapping()
+    @Transactional
     public ResponseEntity<AccountsLedger> postEvent(@Validated @RequestBody AccountsLedgerDto accountsLedgerDto) {
        log.info("Event received: {}", accountsLedgerDto);
         AccountsLedger accountsLedger = AccountsLedgerMapper.mapToAccountsLedger(accountsLedgerDto, new AccountsLedger());
-        accountLedgerService.saveAccountLedgerEvent(accountsLedger);;
+        accountLedgerService.saveAccountLedgerEvent(accountsLedger);
+        Accounts accounts = accountsLedgerMapper.mapToAccounts(accountsLedgerDto, new Accounts());
+        accountsLedgerFeignClient.postAccount(accounts);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<List<AccountsLedger>> getEventbyId(@Validated
+    public ResponseEntity<AccountsLedger> getEventbyId(@Validated
             @RequestParam @Pattern(regexp="(^$|[0-9][a-z][A-Z])", message = "Id must be alpha numeric") String id) {
-        return new ResponseEntity<>(HttpStatus.OK);
+        AccountsLedger accountsLedger = accountLedgerService.fetchAccountLedgerEventById(id);
+        return  ResponseEntity.status(HttpStatus.OK).body(accountsLedger);
     }
 
     @GetMapping(path = "account={accountId}")
-    public ResponseEntity<AccountsLedger> getEventByAccountId( @Validated
+    public ResponseEntity<List<AccountsLedger>> getEventByAccountId( @Validated
             @RequestParam @Pattern(regexp="(^$|[0-9][a-z][A-Z])", message = "Id must be alpha numeric") String accountId) {
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<AccountsLedger> accountsLedger = accountLedgerService.fetchAccountLedgerByAccountId(accountId);
+        Stream<AccountsLedger> sortedAccountLedger = accountsLedger.stream().sorted(Comparator.comparing(AccountsLedger::getEventTimestamp));
+        return ResponseEntity.accepted().body(accountsLedger);
     }
 }

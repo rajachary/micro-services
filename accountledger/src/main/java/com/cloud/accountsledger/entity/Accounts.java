@@ -1,4 +1,4 @@
-package com.cloud.accounts.entity;
+package com.cloud.accountsledger.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,11 +27,7 @@ public class Accounts {
     String accountId;
 
     @NonNull
-    Double amount;
-
-    @NonNull
-    String type;
-
+    Double balance;
 
     @NonNull
     String currency;

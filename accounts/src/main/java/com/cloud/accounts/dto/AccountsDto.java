@@ -17,7 +17,7 @@ import lombok.*;
 @Setter
 @Getter
 public class AccountsDto {
-    private String eventId;
+//    private String eventId;
     private String accountId;
     private String type;
     private Double amount;
