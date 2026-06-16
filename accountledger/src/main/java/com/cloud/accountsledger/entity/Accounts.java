@@ -19,15 +19,19 @@ import lombok.*;
 
 
 @Entity
-@Getter @Setter @ToString @AllArgsConstructor @NoArgsConstructor
+@AllArgsConstructor @NoArgsConstructor
 @Data
 public class Accounts {
 
     @Id
+    @NonNull
     String accountId;
 
     @NonNull
-    Double balance;
+    Double amount;
+
+    @NonNull
+    String type;
 
     @NonNull
     String currency;

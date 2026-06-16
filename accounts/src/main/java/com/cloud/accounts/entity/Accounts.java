@@ -19,7 +19,7 @@ import lombok.*;
 
 
 @Entity
-@Getter @Setter @ToString @AllArgsConstructor @NoArgsConstructor
+ @AllArgsConstructor @NoArgsConstructor
 @Data
 public class Accounts {
 

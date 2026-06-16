@@ -7,11 +7,11 @@ import java.util.*;
 
 public interface AccountLedgerService {
 
-    AccountsLedger saveAccountLedgerEvent(AccountsLedger accountsLedger);
+    AccountsLedger saveAccountLedgerEvent(AccountsLedgerDto accountsLedgerDto);
 
     AccountsLedger fetchAccountLedgerEventById(String eventId);
 
     List<AccountsLedger> fetchAccountLedgerByAccountId(String AccountId);
 
-    double getBalance(AccountsLedgerDto accountsLedgerDto);
+    Optional<Double> getBalance(String accountId);
 }

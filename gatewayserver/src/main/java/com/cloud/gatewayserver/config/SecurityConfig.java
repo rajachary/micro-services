@@ -18,7 +18,8 @@ public class SecurityConfig {
         return serverHttpSecurity
                 .authorizeExchange(ex ->
                         ex.pathMatchers("/accounts/**").authenticated()
-                            .pathMatchers("/events/**").permitAll())
+                            .pathMatchers("/events/**").permitAll()
+                                .pathMatchers("/h2-console/**").permitAll())
                 .oauth2ResourceServer( oAuth2ResourceServerSpec ->
                         oAuth2ResourceServerSpec
                             .jwt(Customizer.withDefaults()))

@@ -1,6 +1,7 @@
 package com.cloud.accountsledger.controller;
 
 
+import com.cloud.accountsledger.constants.*;
 import com.cloud.accountsledger.dto.*;
 import com.cloud.accountsledger.entity.*;
 import com.cloud.accountsledger.mapper.*;
@@ -10,8 +11,6 @@ import jakarta.transaction.*;
 import jakarta.validation.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import lombok.extern.java.*;
-import lombok.extern.slf4j.*;
 import org.slf4j.*;
 import org.springframework.http.*;
 import org.springframework.validation.annotation.*;
@@ -30,9 +29,8 @@ import java.util.stream.*;
  */
 
 @RestController
-@RequestMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(path = "/events", produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
-@Validated
 public class AccountsLedgerController {
 
     private static final Logger log = LoggerFactory.getLogger(AccountsLedgerController.class);
@@ -42,24 +40,27 @@ public class AccountsLedgerController {
 
     @PostMapping()
     @Transactional
-    public ResponseEntity<AccountsLedger> postEvent(@Validated @RequestBody AccountsLedgerDto accountsLedgerDto) {
+    public ResponseEntity<ResponseDto> postEvent(
+            @Validated @RequestBody AccountsLedgerDto accountsLedgerDto) {
        log.info("Event received: {}", accountsLedgerDto);
-        AccountsLedger accountsLedger = AccountsLedgerMapper.mapToAccountsLedger(accountsLedgerDto, new AccountsLedger());
-        accountLedgerService.saveAccountLedgerEvent(accountsLedger);
-        accountLedgerService.getBalance(accountsLedgerDto);
+        AccountsLedger accountsLedger = AccountsLedgerMapper.mapToAccountLedger(accountsLedgerDto, new AccountsLedger());
+        accountLedgerService.saveAccountLedgerEvent(accountsLedgerDto);
+        accountLedgerService.getBalance(accountsLedgerDto.getAccountId());
         Accounts accounts = accountsLedgerMapper.mapToAccounts(accountsLedgerDto, new Accounts());
+
         accountsLedgerFeignClient.postAccount(accounts.getAccountId(), accounts);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new ResponseDto(MessageConstants.STATUS_201, MessageConstants.MESSAGE_201) );
     }
 
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<AccountsLedger> getEventbyId(@Validated
+    @GetMapping("/{id}")
+    public ResponseEntity<AccountsLedger> getEventById(@Validated
             @RequestParam @Pattern(regexp="(^$|[0-9][a-z][A-Z])", message = "Id must be alpha numeric") String id) {
         AccountsLedger accountsLedger = accountLedgerService.fetchAccountLedgerEventById(id);
         return  ResponseEntity.status(HttpStatus.OK).body(accountsLedger);
     }
 
-    @GetMapping(path = "account={accountId}")
+    @GetMapping("/account={accountId}")
     public ResponseEntity<List<AccountsLedger>> getEventByAccountId( @Validated
             @RequestParam @Pattern(regexp="(^$|[0-9][a-z][A-Z])", message = "Id must be alpha numeric") String accountId) {
         List<AccountsLedger> accountsLedger = accountLedgerService.fetchAccountLedgerByAccountId(accountId);

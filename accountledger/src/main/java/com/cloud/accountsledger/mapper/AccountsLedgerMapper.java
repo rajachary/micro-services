@@ -14,7 +14,7 @@ public class AccountsLedgerMapper {
     private static final Logger log = LoggerFactory.getLogger(AccountsLedgerMapper.class);
     private AccountsLedgerRepository accountsLedgerRepository;
 
-    public static AccountsLedger mapToAccountsLedger(AccountsLedgerDto accountsLedgerDto, AccountsLedger accountsLedger){
+    public static AccountsLedger mapToAccountLedger(AccountsLedgerDto accountsLedgerDto, AccountsLedger accountsLedger){
        accountsLedger.setEventId(accountsLedgerDto.getEventId());
        accountsLedger.setAccountId(accountsLedgerDto.getAccountId());
        accountsLedger.setType(accountsLedgerDto.getType());
@@ -25,11 +25,12 @@ public class AccountsLedgerMapper {
        accountsLedger.setSource (accountsLedgerDto.getMetadata().getSource());
         return accountsLedger;
     }
-    public Accounts mapToAccounts(AccountsLedgerDto accountsLedgerDto, Accounts accounts){
-         accounts.setAccountId(accountsLedgerDto.getAccountId());
-         //accounts.setBalance(getBalance(accountsLedgerDto));
-         accounts.setCurrency(accountsLedgerDto.getCurrency());
+
+    public Accounts mapToAccounts(AccountsLedgerDto accountsLedgerDto, Accounts accounts) {
+        accounts.setAccountId(accountsLedgerDto.getAccountId());
+        accounts.setAmount(accountsLedgerDto.getAmount());
+        accounts.setCurrency(accountsLedgerDto.getCurrency());
+        accounts.setType(accountsLedgerDto.getType());
         return accounts;
     }
-
 }

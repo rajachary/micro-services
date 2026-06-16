@@ -19,23 +19,23 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping(path="/{accountId}", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/accounts", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Validated
 @AllArgsConstructor
 public class AccountsController {
     private AccountRepository  accountRepository;
 
-    @PostMapping(path = "/transactions")
-    public ResponseEntity<Accounts> postAccount(@Validated @PathVariable String accountId, @RequestBody Accounts accounts) {
+    @PostMapping(value = "/{accountId}/transactions")
+    public ResponseEntity<Accounts> postAccount(@Validated @PathVariable("accountId") String accountId, @RequestBody Accounts accounts) {
         accountRepository.save(accounts);
         return ResponseEntity.status(HttpStatus.OK).body(accounts);
     }
-    @GetMapping(path = "/balance")
+    @GetMapping(value = "/{accountId}/balance")
     public ResponseEntity<String> getCurrentBalance(@Validated @PathVariable String accountId) {
         accountRepository.findByAccountId(accountId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @GetMapping
+    @GetMapping("/{accountId}")
     public ResponseEntity<String> getAccountDetailsAndRecentTransactions(@Validated @PathVariable String accountId) {
         accountRepository.findByAccountId(accountId);
         return new ResponseEntity<>(HttpStatus.OK);
