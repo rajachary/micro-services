@@ -1,4 +1,4 @@
-package com.cloud.accountsledger.dto;
+package com.cloud.accounts.dto;
 
 import lombok.*;
 import org.springframework.http.*;

@@ -1,4 +1,4 @@
-package com.cloud.accountsledger.exceptions;
+package com.cloud.accounts.exceptions;
 
 import java.util.*;
 
